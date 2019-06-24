@@ -1,5 +1,5 @@
 
-# GoPro 7 Python Clien
+# GoPro Hero 7 Python Client
 
 Command reference found here https://github.com/KonradIT/goprowifihack/blob/master/HERO7/HERO7-Commands.md
 
@@ -11,7 +11,8 @@ Command reference found here https://github.com/KonradIT/goprowifihack/blob/mast
 
 ## Basic Usage
 ```		
-gopro = GoPro7Client(log_file=None)
+gopro = GoPro7Client()
+gopro.pair()
 print('status:', gopro.status())
 logging.info('set photo mode:', gopro.set_primary_mode(mode=PrimaryMode.PHOTO))
 logging.info('take photo:', gopro.take_photo())
