@@ -10,10 +10,20 @@ Command reference found here https://github.com/KonradIT/goprowifihack/blob/mast
 1. Connect and manage the GoPro7 device using the client API.
 
 ## Basic Usage
-```		
+
+1. Create client and pair 
+```
 gopro = GoPro7Client()
 gopro.pair()
+```
+1. Get status of device
+```
 print('status:', gopro.status())
-logging.info('set photo mode:', gopro.set_primary_mode(mode=PrimaryMode.PHOTO))
-logging.info('take photo:', gopro.take_photo())
+```
+1. Take photo
+```
+result = gopro.set_mode(mode=PrimaryMode.PHOTO, sub_mode=PhotoSubMode.NIGHT)
+logging.info('set photo mode: %s', result)
+result = gopro.take_photo()
+logging.info('take_photo_result: %s', result)
 ```
