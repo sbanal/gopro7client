@@ -2,7 +2,7 @@ import urllib.request
 import logging
 from enum import Enum
 
-# https://github.com/KonradIT/goprowifihack/blob/master/HERO7/HERO7-Commands.md
+
 class PrimaryMode(Enum):
 	VIDEO = 0
 	PHOTO = 1
@@ -11,7 +11,7 @@ class PrimaryMode(Enum):
 
 class GoPro7Client:
 
-	def __init__(self, url = 'http://10.5.5.9/gp/gpControl', log=True, log_file='gopro7.log', timeout=60):
+	def __init__(self, url = 'http://10.5.5.9/gp/gpControl', log=True, log_file=None, timeout=60):
 		self.url = url
 		if log is True:
 			logging.basicConfig(filename=log_file, format='%(asctime)s %(levelname)s: %(message)s', 
@@ -45,13 +45,15 @@ class GoPro7Client:
 			raise ValueError('Invalid mode {}. Supported values are defined in enum PrimaryMode.'.format(mode))
 		return self._send_http_request(main_command='command', command='mode', uri=None, p=mode.value)
 
-	def start_video(self):
-		if mode not in PrimaryMode:
-			raise ValueError('Invalid mode {}. Supported values are defined in enum PrimaryMode.'.format(mode))
-		return self._send_http_request(main_command='command', command='mode', uri=None, p=mode.value)
-	
+	def take_photo(self):
+		return self._send_http_request(main_command='command', command='shutter', uri=None, p=1)
 
-gopro = GoPro7Client(log_file=None)
-print('status:', gopro.status())
-logging.info('set mode:', gopro.set_primary_mode(mode=PrimaryMode.VIDEO))
+	def start_video(self):
+		return self._send_http_request(main_command='command', command='shutter', uri=None, p=1)
+	
+	def stop_video(self):
+		return self._send_http_request(main_command='command', command='shutter', uri=None, p=0)
+
+
+
 
